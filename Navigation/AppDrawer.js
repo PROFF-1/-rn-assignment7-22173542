@@ -2,7 +2,7 @@ import 'react-native-gesture-handler'
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import AppStack from './AppNavigation';
@@ -17,10 +17,42 @@ import Clothing from '../Screens/Clothing'
 const Drawer = createDrawerNavigator();
 
 export default function AppDrawer() {
+
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Store">
-        <Drawer.Screen name="Store" component={AppStack}  options={{headerShown:false}}/>
+      <Drawer.Navigator initialRouteName="Home"
+       drawerContent={(props)=>{
+        return(
+          <DrawerContentScrollView {...props}>
+            <DrawerItem
+             label="Store"
+              onPress={() => props.navigation.navigate('Home')}
+            />
+            <DrawerItem
+             label="Location"
+              onPress={() => props.navigation.navigate('Location')}
+            />
+            <DrawerItem
+             label="Blog"
+              onPress={() => props.navigation.navigate('Blog')}
+            />
+            <DrawerItem
+             label="Jewelery"
+              onPress={() => props.navigation.navigate('Jewelery')}
+            />
+            <DrawerItem
+             label="Electronic"
+              onPress={() => props.navigation.navigate('Electronic')}
+            />
+            <DrawerItem
+             label="Clothing"
+              onPress={() => props.navigation.navigate('Clothing')}
+            />
+          </DrawerContentScrollView>
+        )
+       }}
+      >
+        <Drawer.Screen name="Home" component={AppStack}  options={{headerShown:false}}/>
         <Drawer.Screen name='Location' component={Locations} options={{headerShown:false}}/>
         <Drawer.Screen name='Blog' component={Blog} options={{headerShown:false}}/>
         <Drawer.Screen name='Jewelery' component={Jewelery} options={{headerShown:false}}/>

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View,StatusBar } from 'react-native'
 import React from 'react'
-import Header from '../Components/Header'
+import  DetailsHeader from '../Components/DetailsHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export default function Jewelery() {
   return (
     <SafeAreaView style={{paddingTop:StatusBar.currentHeight, backgroundColor:'#ddd', flex:1}}>
-      <Header/>
+      < DetailsHeader/>
       <View style={{flex:1,alignItems:'center', justifyContent:'center', backgroundColor:'white'}}>
         <Text>Jewelery</Text>
       </View>
