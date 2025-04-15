@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     alignItems:'center',
     paddingHorizontal:10,
-    paddingBottom:10
+    paddingVertical:10,
+    backgroundColor:'#ddd'
   },
 
   the:{
     fontWeight:'bold',
     fontSize: 15,
-    marginBottom:-5
   },
 
   conerStore:{
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   },
 
   name:{
+    marginLeft:40,
     paddingHorizontal:5,
     borderLeftWidth:3,
     borderBottomWidth:4,

@@ -67,7 +67,6 @@ export default function Home({navigation}) {
         
         />
       </View>
-      <StatusBar/>
     </SafeAreaView>
   )
 }

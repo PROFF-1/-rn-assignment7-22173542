@@ -27,7 +27,7 @@ export default function AppDrawer() {
         <Drawer.Screen name='Electronic' component={Electronic} options={{headerShown:false}}/>
         <Drawer.Screen name='Clothing' component={Clothing} options={{headerShown:false}}/>
       </Drawer.Navigator>
-    <StatusBar style="auto" />
+    <StatusBar style='dark' />
     </NavigationContainer>
    
   )

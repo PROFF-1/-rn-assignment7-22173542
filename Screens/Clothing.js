@@ -1,12 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,StatusBar } from 'react-native'
 import React from 'react'
+import Header from '../Components/Header'
+import { SafeAreaView } from 'react-native-safe-area-context'
+
 
 export default function Clothing() {
   return (
-    <View>
-      <Text>Clothing</Text>
-    </View>
+    <SafeAreaView style={{paddingTop:StatusBar.currentHeight, backgroundColor:'#ddd', flex:1}}>
+      <Header/>
+      <View style={{flex:1,alignItems:'center', justifyContent:'center', backgroundColor:'white'}}>
+        <Text>Clothing</Text>
+      </View>
+      
+      <StatusBar/>
+    </SafeAreaView>
+   
   )
 }
 
-const styles = StyleSheet.create({})

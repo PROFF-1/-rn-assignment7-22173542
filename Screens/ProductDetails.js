@@ -1,56 +1,239 @@
-import { StyleSheet, Text, View,Image,StatusBar } from 'react-native'
+import { StyleSheet, Text, View,Image,StatusBar,SafeAreaView} from 'react-native'
 import React from 'react'
 import Header from '../Components/Header';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function ProductDetails({route}) {
   const {category, title, image, price} = route.params;
+
+  const instructions=[
+    {
+
+    id:'1',
+    name:'Do not use bleach',
+    image:require('../assets/Do Not Bleach.png')
+    },
+    {
+      id:'2',
+      name:'Do not tumble dry',
+      image:require('../assets/Do Not Tumble Dry.png')
+    },
+    {
+      id:'3',
+      name:'Dry clean with tetrachloroethylene',
+      image:require('../assets/Do Not Wash.png')
+    },
+    {
+      id:'4',
+      name:'Iron at a maximum of 110C/230F',
+      image:require('../assets/Iron Low Temperature.png')
+    }
+]
   return (
     
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header/>
-      <Image source={{uri:image}}
-      style={styles.Photo}
-      resizeMode='contain'
-      />
-      <View style ={styles. titleContainer}>
-      <Text style={styles.category}>{category}</Text>
-      <Image
-      source={require('../assets/Export.png')}/>
+      <ScrollView nestedScrollEnabled={false}>
+        <View style={styles.imageContainer}>
+          <Image source={{uri:image}}
+          style={styles.Photo}
+          resizeMode='contain'
+          />
+        </View>
+        <View style={styles.details}>
+          <View style ={styles. titleContainer}>
+          <Text style={styles.category}>{category}</Text>
+          <Image
+          source={require('../assets/Export.png')}/>
+          </View>
+          
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.price}>${price}</Text>
+          <Text style={styles.materials}>M A T E R I A L S</Text>
+          <Text style={styles.message}> 
+            We work with monitoring programmes to
+            ensure compliance with safety, health and
+            quality standards for our products.
+          </Text>
+
+          <View style={styles.instructionsContainer}>
+            <FlatList
+             data={instructions}
+             renderItem={({item})=>{
+              return(
+                <View style={styles.instructions}>
+                  <Image source={item.image}
+                  
+                  style={{height:35,width:35,marginRight:10}}
+                  tintColor='#555'/>
+                  <Text style={styles.instructionText}>{item.name}</Text>
+                </View>
+              )
+             }}
+             scrollEnabled={false}
+            />
+          </View>
+
+          <View style={styles.delieveryContainer}>
+            <View style={styles.delieveryLeft}>
+              <Image source={require('../assets/Shipping.png')}
+                 style={{height:35,width:35,marginRight:10}}
+              />
+            
+              <View>
+                <Text style={styles.delieveryTitle}>Free Flat Rate Shipping</Text>
+                <Text style={styles.delieveryText}>Estimated to be delievered on</Text>
+                <Text style={styles.instructionText}>09/05/2025-12/05/2025</Text>
+              </View>
+            </View>
+            <View>
+              <Image source={require('../assets/Up.png')}/>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+      <View style={styles.addToCart}>
+        <View style={styles.addToCartLeft}>
+          <Image source={require('../assets/Plus.png')}
+            tintColor={'white'}
+            style={{height:40,width:40}}
+          />
+          <Text style={styles.addToBasket}>ADD TO BASKET</Text>
+        </View>
+        <Image source={require('../assets/Heart.png')}
+          tintColor={'white'}
+          style={{height:40,width:40}}
+        />
       </View>
-      
-      <Text>{title}</Text>
-      <Text style={styles.price}>{price}</Text>
-      <StatusBar/>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ddd',
     paddingTop:StatusBar.currentHeight
    
   },
 
+
+  imageContainer:{
+    backgroundColor:'white',
+    width:'100%',
+    height:350,
+    paddingVertical:20
+  },
+
   Photo:{
-    height:'60%',
-    width:'100%'
+    height:'100%'
   },
   price:{
-    color:'orange'
+    color:'orange',
+    fontWeight:'bold',
+    fontSize:28,
+    marginBottom:10
+  },
+
+  title:{
+  fontSize:18,
+  color: 'grey',
+  marginBottom :15
   },
 
   titleContainer:{
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    paddingHorizontal:15,
     paddingVertical:15
   },
 
+  details:{
+    paddingHorizontal:25
+  },
   category:{
     fontSize:28,
     fontWeight:'bold',
+  },
+  
+  materials:{
+    fontSize:18,
+    fontWeight:'bold',
+    marginVertical:5
+  },
+
+  message:{
+    fontSize:16,
+    color:'grey',
+    marginVertical:5,
+    lineHeight:20
+  },
+
+  instructions:{
+    flexDirection:'row',
+    alignItems:'center',
+    marginVertical:10
+
+  },
+
+
+  instructionText:{
+    fontSize:16,
+    color:'grey'
+  },
+
+  instructionsContainer:{
+    borderBottomWidth:2,
+    borderBottomColor:'#888',
+    height:250,
+    marginBottom: 30
+  },
+
+
+  delieveryContainer:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'flex-start',
+    marginBottom:50
+  },
+
+
+  delieveryLeft:{
+    flexDirection:'row'
+  },
+
+  delieveryTitle:{
+    fontSize:18,
+    fontWeight:'bold',
+  },
+
+
+  delieveryText:{
+    color:'grey',
+    marginVertical:10,
+    fontSize:16
+  },
+  
+  addToCart:{
+    backgroundColor:'black',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingHorizontal: 20,
+    paddingVertical:20
+  },
+
+  addToBasket:{
+    color:'white',
+    fontSize:20,
+    fontWeight:'bold'
+  },
+
+
+  addToCartLeft:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    width:'55%',
   }
 });
