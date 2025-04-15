@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View,Image, Pressable,navigation, Button,Platform ,StatusBar} from 'react-native'
+import { FlatList, StyleSheet, Text, View,Image, Pressable,navigation, Button,Platform ,StatusBar, ActivityIndicator, TouchableOpacity} from 'react-native'
 import {React, useState, useEffect} from 'react'
 import Header from '../Components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,34 +12,76 @@ export default function Home({navigation}) {
   
 
   const[products, setProduct]= useState([])
+  const [loading, setLoading]= useState(false)
+  const [error, setError]= useState(null)
 
   useEffect(()=>{
       getData()
     },[]);
 
-  const getData=()=>{
-      const URL= 'https://fakestoreapi.com/products'
-      fetch(URL)
-        .then((res)=>{
-          if(!res.ok){
-            throw new Error('Error Fecthing From Api')
-          }
-          return res.json();  
-        })
-          .then((data)=>{
 
-          setProduct(data)
+      const getData= async()=>{
+
+        const URL= 'https://fakestoreapi.com/products'
+        setLoading(true)
+        try{
+
+          const res = await fetch(URL)
+          if(!res.ok){
+            throw new Error('Error Fetching from API')
           }
-      )
-      .catch((error)=>{
-          console.log(error.message)
-        })
+           
+          const data = await res.json()
+          setProduct(data)
       }
+      catch(error){
+        console.log(error);
+        setError(error.message)
+      }finally{
+          setLoading(false)
+      }
+        }
+        
   return (
+
+
+
+
     <SafeAreaView style={styles.container}>
 
 
-     <Header/>
+      
+    {
+      loading &&
+      <View style={styles.loadingScreen}>
+       
+        <ActivityIndicator
+        size={'large'}
+        color={'red'}
+        />
+         <Text>Loading</Text>
+      </View>
+    }
+
+    {
+      error && 
+      <View  style={styles.errorScreen}>
+        <Text>
+          {error.message}
+        </Text>
+        <TouchableOpacity onPress={getData}>
+          <Text>Reload</Text>
+        </TouchableOpacity>
+      </View>
+    }
+
+
+
+    {
+      !loading && !error &&
+      (
+        <>
+         <Header/>
      <View style={styles.subHeaderContainer}>
         <Text style={styles.ourStory}>OUR STORY</Text>
         <View style={styles.headerRight}>
@@ -90,6 +132,10 @@ export default function Home({navigation}) {
         style={{position:'relative'}}
         />
       </View>
+        </>
+      )
+    }
+    
    
     </SafeAreaView>
   )
@@ -101,6 +147,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd',
     paddingTop: StatusBar.currentHeight
    
+  },
+
+
+  loadingScreen:{
+    flex:1,
+    backgroundColor:'#ddd',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+
+
+  errorScreen:{
+      paddingTop: 60,
+      backgroundColor:'#ddd',
+      alignItems:'flex-start',
   },
   photo:{
     width:'80%',

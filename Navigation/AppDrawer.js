@@ -51,22 +51,42 @@ export default function AppDrawer() {
             <DrawerItem
              label="Location"
               onPress={() => props.navigation.navigate('Location')}
+              focused={focused === 'Location'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
             <DrawerItem
              label="Blog"
               onPress={() => props.navigation.navigate('Blog')}
+              focused={focused === 'Blog'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
             <DrawerItem
              label="Jewelery"
               onPress={() => props.navigation.navigate('Jewelery')}
+              focused={focused === 'Jewelery'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
             <DrawerItem
              label="Electronic"
               onPress={() => props.navigation.navigate('Electronic')}
+              focused={focused === 'Electronic'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
             <DrawerItem
              label="Clothing"
               onPress={() => props.navigation.navigate('Clothing')}
+              focused={focused === 'Clothing'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
           </DrawerContentScrollView>
         )
