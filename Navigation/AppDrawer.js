@@ -19,10 +19,15 @@ const Drawer = createDrawerNavigator();
 
 export default function AppDrawer() {
 
+  
+
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home"
+      <Drawer.Navigator initialRouteName="Store"
        drawerContent={(props)=>{
+
+        const {routeNames, index}= props.state
+        const focused = routeNames[index];
         return(
           <DrawerContentScrollView {...props}>
             <Pressable  style={styles.close} onPress={()=>{props.navigation.closeDrawer()}}>
@@ -37,7 +42,11 @@ export default function AppDrawer() {
             </View>
             <DrawerItem
              label="Store"
-              onPress={() => props.navigation.navigate('Home')}
+              onPress={() => props.navigation.navigate('Store')}
+              focused={focused === 'Store'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
             />
             <DrawerItem
              label="Location"
@@ -63,7 +72,7 @@ export default function AppDrawer() {
         )
        }}
       >
-        <Drawer.Screen name="Home" component={AppStack}  options={{headerShown:false}}/>
+        <Drawer.Screen name="Store" component={AppStack}  options={{headerShown:false}}/>
         <Drawer.Screen name='Location' component={Locations} options={{headerShown:false}}/>
         <Drawer.Screen name='Blog' component={Blog} options={{headerShown:false}}/>
         <Drawer.Screen name='Jewelery' component={Jewelery} options={{headerShown:false}}/>
@@ -102,6 +111,12 @@ const styles = StyleSheet.create({
   close:{
     height: 50,
     width:50
+  },
+
+
+
+  drawerItems:{
+    color:'green'
   }
 })
 

@@ -2,6 +2,10 @@ import { FlatList, StyleSheet, Text, View,Image, Pressable,navigation, Button,Pl
 import {React, useState, useEffect} from 'react'
 import Header from '../Components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 export default function Home({navigation}) {
@@ -36,7 +40,18 @@ export default function Home({navigation}) {
 
 
      <Header/>
-      <View>
+     <View style={styles.subHeaderContainer}>
+        <Text style={styles.ourStory}>OUR STORY</Text>
+        <View style={styles.headerRight}>
+          <View style={styles.iconHolder}>
+          <MaterialCommunityIcons name="format-list-checkbox" size={24} color="black" />
+          </View>
+          <View style={styles.iconHolder}>
+          <Ionicons name="filter" size={24} color="black" />          
+          </View>
+        </View>
+     </View>
+      <View style={{marginBottom: 100}}>
         <FlatList
         data={products}
         renderItem={({item})=>{
@@ -53,20 +68,29 @@ export default function Home({navigation}) {
               style={styles.photo}
               resizeMode='contain'
               
+              
               />
               <Text style={styles.cartegory}>{item.category}</Text>
               <View  style={styles.descriptionContainer}>
                 <Text style={styles.description} numberOfLines={3}>{item.title}</Text>
               </View>
-              <Text style={styles.price}>${item.price}</Text>
+              <View>
+
+              
+                <Text style={styles.price}>${item.price}</Text>
+                <Pressable style={styles.add}>
+                    <MaterialIcons name="add-circle-outline" size={24} color="black" />
+                </Pressable>
+              </View>
             </Pressable>
           )
         }}
         keyExtractor={(item)=>item.id}
         numColumns={2}
-        
+        style={{position:'relative'}}
         />
       </View>
+   
     </SafeAreaView>
   )
 }
@@ -89,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     width:'50%',
     marginBottom:30,
-    marginRight:10
+    marginRight:10,
   },
 
 
@@ -103,7 +127,8 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:'bold',
     marginVertical:10,
-    color:'orange'
+    color:'orange',
+    marginRight: 100
   },
 
   description:{
@@ -113,6 +138,51 @@ const styles = StyleSheet.create({
 
   descriptionContainer:{
     paddingHorizontal:10
+  },
+
+
+  subHeaderContainer:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingHorizontal: 20,
+    paddingVertical:20
+  },
+
+
+  headerRight: {
+    flexDirection:'row',
+    alignItems:'center',
+    width: '25%',
+    justifyContent:'space-between'
+  },
+
+
+  iconHolder:{
+    backgroundColor:'#eee',
+    height:40,
+    width:40,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:'50%'
+  },
+
+
+  ourStory:{
+    fontSize: 30,
+    fontWeight:'bold',
+    letterSpacing:5
+  },
+
+
+  add:{
+    height:35,
+    width:35,
+    alignItems:'center',
+    justifyContent:'center',
+    position:'absolute',
+    bottom:0,
+    right:0
   }
 });
 
