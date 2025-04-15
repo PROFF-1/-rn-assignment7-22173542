@@ -4,13 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator,DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Image} from 'react-native';
 import AppStack from './AppNavigation';
 import Locations from '../Screens/Locations'
 import Blog from '../Screens/Blog'
 import Jewelery from '../Screens/Jewelery'
 import Electronic from '../Screens/Electronic'
 import Clothing from '../Screens/Clothing'
+import { Pressable } from 'react-native-gesture-handler';
 
 
 
@@ -24,6 +25,16 @@ export default function AppDrawer() {
        drawerContent={(props)=>{
         return(
           <DrawerContentScrollView {...props}>
+            <Pressable  style={styles.close} onPress={()=>{props.navigation.closeDrawer()}}>
+              <Image source={require('../assets/Close.png')}
+              
+               tintColor={'black'}
+              />
+            </Pressable>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>ERIC ATSU</Text>
+              <Text style={styles.underline}>____________</Text>
+            </View>
             <DrawerItem
              label="Store"
               onPress={() => props.navigation.navigate('Home')}
@@ -65,5 +76,33 @@ export default function AppDrawer() {
   )
 }
 
+
+
+const styles = StyleSheet.create({
+
+  nameContainer:{
+    padding:15
+  },
+
+
+  name:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing:5
+  
+  },
+
+
+  underline:{
+    color:'red',
+    fontWeight:'bold',
+    fontSize: 20
+  },
+
+  close:{
+    height: 50,
+    width:50
+  }
+})
 
 
