@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Image,StatusBar,SafeAreaView} from 'react-native'
 import React from 'react'
-import Header from '../Components/Header';
+import DetailsHeader from '../Components/DetailsHeader';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function ProductDetails({route}) {
@@ -32,7 +32,7 @@ export default function ProductDetails({route}) {
   return (
     
     <SafeAreaView style={styles.container}>
-      <Header/>
+      <DetailsHeader/>
       <ScrollView nestedScrollEnabled={false}>
         <View style={styles.imageContainer}>
           <Image source={{uri:image}}
