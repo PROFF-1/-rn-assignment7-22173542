@@ -64,20 +64,6 @@ export default function Home({ navigation }) {
     }
   };
 
-  const handleRemoveFromCart = async (item) => {
-    try {
-      await AsyncStorage.removeItem(`product-${item.id}`);
-      console.log('Product removed:', item.title);
-      setAddedItems((prev) => {
-        const updatedSet = new Set(prev);
-        updatedSet.delete(item.id); // Remove item ID from the set
-        return updatedSet;
-      });
-    } catch (error) {
-      console.log('Error removing product:', error);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       {loading && (
