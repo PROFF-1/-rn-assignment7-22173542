@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 export default function Header() {
 
@@ -14,8 +16,14 @@ export default function Header() {
           tintColor='black'/>
       </TouchableOpacity>
       <View style={styles.name}>
-        <Text style={styles.the}>The</Text>
-        <Text style={styles.conerStore}>cornerStore</Text>
+        <View>
+         <MaterialIcons name="store" size={34} color="black" />
+        </View>
+        <View>
+         <Text style={styles.the}>The</Text>
+         <Text style={styles.conerStore}>cornerStore</Text>
+        </View>
+        
       </View>
       <View style={styles.headerRight}>
         <Image source={require('../assets/Search.png')}
@@ -35,8 +43,7 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     alignItems:'center',
     paddingHorizontal:15,
-    paddingVertical:10,
-    backgroundColor:'#ddd'
+    backgroundColor:'#fff'
   },
 
   the:{
@@ -55,10 +62,9 @@ const styles = StyleSheet.create({
     marginLeft:40,
     paddingHorizontal:5,
     borderLeftWidth:3,
-    borderBottomWidth:4,
     borderLeftColor:'red',
-    borderBottomColor:'red',
-    borderBottomLeftRadius:15
+    borderBottomLeftRadius:15,
+    flexDirection:'row'
   },
 
   headerRight:{

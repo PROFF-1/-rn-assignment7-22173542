@@ -1,16 +1,17 @@
 import { FlatList, StyleSheet, Text, View,Image, Pressable,navigation, Button,Platform ,StatusBar, ActivityIndicator, TouchableOpacity} from 'react-native'
-import {React, useState, useEffect} from 'react'
+import {React, useState, useEffect, useContext} from 'react'
 import Header from '../Components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import  {DataContext} from '../DataContext';
 
 
 export default function Home({navigation}) {
   
-
+  const {setProductData}= useContext(DataContext)
   const[products, setProduct]= useState([])
   const [loading, setLoading]= useState(false)
   const [error, setError]= useState(null)
@@ -19,6 +20,11 @@ export default function Home({navigation}) {
       getData()
     },[]);
 
+
+   {/* const moveData = () => {
+      const newProduct = { title, category, image, price };
+      setProductData(prev => [...prev, newProduct]);
+    };*/}
 
       const getData= async()=>{
 
@@ -69,7 +75,7 @@ export default function Home({navigation}) {
         <Text>
           {error.message}
         </Text>
-        <TouchableOpacity onPress={getData}>
+        <TouchableOpacity onPress={moveData}>
           <Text>Reload</Text>
         </TouchableOpacity>
       </View>
@@ -120,7 +126,8 @@ export default function Home({navigation}) {
 
               
                 <Text style={styles.price}>${item.price}</Text>
-                <Pressable style={styles.add}>
+                <Pressable style={styles.add} onPress={() => {setProductData(prev => [...prev, {title: item.title,category: item.category,image: item.image,price: item.price,}]);}}
+                >
                     <MaterialIcons name="add-circle-outline" size={24} color="black" />
                 </Pressable>
               </View>
@@ -144,8 +151,7 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ddd',
-    paddingTop: StatusBar.currentHeight
+    backgroundColor: '#fff',
    
   },
 
@@ -207,7 +213,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'space-between',
     paddingHorizontal: 20,
-    paddingVertical:20
+    paddingVertical:20,
+    backgroundColor:'white'
   },
 
 

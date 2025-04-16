@@ -1,9 +1,14 @@
-import { StyleSheet, Text, View,Image,StatusBar,SafeAreaView} from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View,Image,StatusBar,SafeAreaView, TouchableOpacity} from 'react-native'
+import React ,{useState,useContext}from 'react'
 import DetailsHeader from '../Components/DetailsHeader';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import  {DataContext} from '../DataContext';
+
 
 export default function ProductDetails({route}) {
+  const {setProductData}= useContext(DataContext)
+    const[products, setProduct]= useState([])
+  
   const {category, title, image, price} = route.params;
 
   const instructions=[
@@ -94,10 +99,12 @@ export default function ProductDetails({route}) {
       </ScrollView>
       <View style={styles.addToCart}>
         <View style={styles.addToCartLeft}>
+          <TouchableOpacity onPress={() => {setProductData(prev => [...prev, {title: title,category: category,image: image,price: price,}]);}}>
           <Image source={require('../assets/Plus.png')}
             tintColor={'white'}
             style={{height:40,width:40}}
           />
+          </TouchableOpacity>
           <Text style={styles.addToBasket}>ADD TO BASKET</Text>
         </View>
         <Image source={require('../assets/Heart.png')}
@@ -112,7 +119,7 @@ export default function ProductDetails({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: '#fff',
     paddingTop:StatusBar.currentHeight
    
   },

@@ -11,6 +11,7 @@ import Blog from '../Screens/Blog'
 import Jewelery from '../Screens/Jewelery'
 import Electronic from '../Screens/Electronic'
 import Clothing from '../Screens/Clothing'
+import CartScreen from '../Screens/CartScreen';
 import { Pressable } from 'react-native-gesture-handler';
 
 
@@ -23,7 +24,7 @@ export default function AppDrawer() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Store"
+      <Drawer.Navigator initialRouteName="Cart"
        drawerContent={(props)=>{
 
         const {routeNames, index}= props.state
@@ -88,6 +89,14 @@ export default function AppDrawer() {
               activeBackgroundColor='red'
               style={styles.drawerItems}
             />
+            <DrawerItem
+             label="Cart"
+              onPress={() => props.navigation.navigate('Cart')}
+              focused={focused === 'Cart'}
+              activeTintColor='white' 
+              activeBackgroundColor='red'
+              style={styles.drawerItems}
+            />
           </DrawerContentScrollView>
         )
        }}
@@ -98,6 +107,7 @@ export default function AppDrawer() {
         <Drawer.Screen name='Jewelery' component={Jewelery} options={{headerShown:false}}/>
         <Drawer.Screen name='Electronic' component={Electronic} options={{headerShown:false}}/>
         <Drawer.Screen name='Clothing' component={Clothing} options={{headerShown:false}}/>
+        <Drawer.Screen name='Cart' component={CartScreen} options={{headerShown:false}}/>
       </Drawer.Navigator>
     <StatusBar style='dark' />
     </NavigationContainer>

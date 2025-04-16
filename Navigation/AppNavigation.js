@@ -11,7 +11,9 @@ import Blog from '../Screens/Blog';
 import Clothing from '../Screens/Clothing';
 import Electronic from '../Screens/Electronic';
 import Jewelery from '../Screens/Jewelery';
+
 import Location from '../Screens/Locations';
+import CartScreen from '../Screens/CartScreen';
 
 
 const Stack = createStackNavigator();
@@ -36,6 +38,7 @@ export default function AppStack(){
         options={{headerShown:false}}/>
         <Stack.Screen name="Electronic" component={Electronic} 
         options={{headerShown:false}}/>
+        <Stack.Screen name="Cart" component ={CartScreen}/>
       </Stack.Navigator>
     )
 }

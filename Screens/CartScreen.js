@@ -1,0 +1,106 @@
+import { StyleSheet, Text, View,SafeAreaView, Image, FlatList,StatusBar} from 'react-native'
+import React, {useContext} from 'react'
+import {DataContext} from '../DataContext'
+import CartHeader from '../Components/CartHeader';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
+export default function CartScreen() {
+
+
+  const {productData} = useContext(DataContext);
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{width:'100%'}}>
+      <CartHeader/>
+      </View>
+      
+      <Text style={styles.checkout}>CHECKOUT</Text>
+      <Text style={styles.underline}>_____________________________</Text>
+      <View>
+        <FlatList
+        
+         data={productData}
+        renderItem={({item})=>{
+          return(
+            <View>
+            <View style={styles.cartItem}>
+              <Image source={{uri:item.image}} style={{height:150, width:150}} resizeMode='contain'/>
+              <View style={{width: 250}}>
+                <Text style={styles.cartegory}>
+                {item.category}
+                </Text>
+                <Text numberOfLines={3} style={styles.description}>
+                {item.title}
+                </Text>
+              <Text style={styles.price}>
+                $ {item.price}
+              </Text>
+              </View> 
+            </View>
+            <MaterialIcons name="highlight-remove" size={24} color="red"  style={styles.remove}/>
+            </View>
+          )
+        }}
+        />
+      </View>
+    </SafeAreaView>
+  )
+}
+
+const styles = StyleSheet.create({
+
+  container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      paddingTop: StatusBar.currentHeight,
+      alignItems:'center'
+     
+    },
+
+
+    cartItem:{
+      flexDirection:'row',
+      alignItems:'center',
+      backgroundColor:'white',
+      paddingVertical:10,
+      marginVertical: 10
+      
+    },
+    cartegory:{
+      fontWeight:'bold',
+      fontSize: 18,
+      marginVertical:3
+    },
+
+    price:{
+      fontSize:16,
+      fontWeight:'bold',
+      color:'orange',
+      marginRight: 100
+    },
+  
+    description:{
+      color:'grey'
+    },
+
+
+    checkout:{
+      fontWeight:'bold',
+      fontSize: 16,
+      letterSpacing:3,
+      marginTop: 10
+    },
+
+    underline:{
+      color:'red',
+      fontSize:18,
+      fontWeight:'bold',
+      marginTop: -10
+    },
+
+    remove:{
+      position:'absolute',
+      bottom:20,
+      right:30
+    }
+})

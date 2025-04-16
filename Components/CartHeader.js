@@ -1,21 +1,18 @@
 import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import {DataContext} from '../DataContext'
 
-
-
-export default function DetailsHeader() {
+export default function CartHeader() {
 
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('Home')
+        navigation.openDrawer()
       }}>
-        <AntDesign name="arrowleft" size={24} color="black" />
+        <Image source={require('../assets/Menu.png')}
+          tintColor='black'/>
       </TouchableOpacity>
       <View style={styles.name}>
         <View>
@@ -29,9 +26,8 @@ export default function DetailsHeader() {
       </View>
       <View style={styles.headerRight}>
         <Image source={require('../assets/Search.png')}
-        style={{height:35, width:35}}/>
-        <Image source ={require('../assets/shopping bag.png')}
-        style={{height:35, width:35}}/>
+        style={{height:35, width:35, marginLeft:30}}/>
+      
       </View>
     </View>
   )
@@ -44,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    paddingHorizontal:10,
+    paddingHorizontal:15,
     paddingVertical:10,
     backgroundColor:'#fff'
   },
@@ -64,10 +60,10 @@ const styles = StyleSheet.create({
   name:{
     marginLeft:40,
     paddingHorizontal:5,
-    flexDirection:'row',
     borderLeftWidth:3,
     borderLeftColor:'red',
     borderBottomLeftRadius:15,
+    flexDirection:'row'
   },
 
   headerRight:{
