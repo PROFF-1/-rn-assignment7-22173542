@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View,SafeAreaView, Image, FlatList,StatusBar} from 'react-native'
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState,useCallback} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {DataContext} from '../DataContext'
 import CartHeader from '../Components/CartHeader';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -8,31 +9,41 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function CartScreen() {
 
 
-  const {productData} = useContext(DataContext);
-  const [storedData, setStoredData]= useState([])
 
 
-
+  const removeFromCart = async (id) => {
+    try {
+      await AsyncStorage.removeItem(`product-${id}`);
+      fetchCartItems(); // Refresh list
+    } catch (error) {
+      console.log('Error removing item:', error);
+    }
+  };
   
 
 
+  const [cartItems, setCartItems] = useState([]);
 
-  const fetchData= async ()=>{
-    try{
-      const value = await AsyncStorage.getItem('data')
+  const fetchCartItems = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const productKeys = keys.filter((key) => key.startsWith('product-'));
+      const stores = await AsyncStorage.multiGet(productKeys);
 
-      if( value !== null){
-        setStoredData(value)
-      }
-    }catch(error){
-
+      const items = stores.map(([key, value]) => JSON.parse(value));
+      setCartItems(items);
+    } catch (error) {
+      console.log('Error loading cart:', error);
     }
-  }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchCartItems();
+    }, [])
+  );
 
 
-  useEffect(()=>{
-    fetchData()
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={{width:'100%'}}>
@@ -41,13 +52,13 @@ export default function CartScreen() {
       
       <Text style={styles.checkout}>CHECKOUT</Text>
       <Text style={styles.underline}>_____________________________</Text>
-      <View>
+      <View style={{marginBottom: 100}}>
         <FlatList
         
-         data={productData}
+         data={cartItems}
         renderItem={({item})=>{
           return(
-            <View>
+            <View >
             <View style={styles.cartItem}>
               <Image source={{uri:item.image}} style={{height:150, width:150}} resizeMode='contain'/>
               <View style={{width: 250}}>
@@ -62,7 +73,9 @@ export default function CartScreen() {
               </Text>
               </View> 
             </View>
-            <MaterialIcons name="highlight-remove" size={24} color="red"  style={styles.remove}/>
+            <MaterialIcons name="highlight-remove" size={24} color="red"  style={styles.remove}
+            onPress={()=>removeFromCart(item.id)}
+            />
             </View>
           )
         }}
