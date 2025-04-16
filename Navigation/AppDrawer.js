@@ -24,7 +24,7 @@ export default function AppDrawer() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Cart"
+      <Drawer.Navigator initialRouteName="Store"
        drawerContent={(props)=>{
 
         const {routeNames, index}= props.state

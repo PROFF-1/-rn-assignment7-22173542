@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View,SafeAreaView, Image, FlatList,StatusBar} from 'react-native'
+import { StyleSheet, Text, View,SafeAreaView, Image, FlatList,StatusBar,TouchableOpacity, Pressable,Platform} from 'react-native'
 import React, {useContext, useEffect, useState,useCallback} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import {DataContext} from '../DataContext'
 import CartHeader from '../Components/CartHeader';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,15 +43,20 @@ export default function CartScreen() {
   );
 
 
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price, 0).toFixed(2);
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{width:'100%'}}>
       <CartHeader/>
       </View>
       
-      <Text style={styles.checkout}>CHECKOUT</Text>
+      <Text style={styles.checkoutText}>CHECKOUT</Text>
       <Text style={styles.underline}>_____________________________</Text>
-      <View style={{marginBottom: 100}}>
+      <View style={{marginBottom: Platform.OS === 'ios'? 60: 90}}>
         <FlatList
         
          data={cartItems}
@@ -80,7 +84,21 @@ export default function CartScreen() {
           )
         }}
         />
+        <View style={styles.amountContainer}>
+          <Text style={styles.estTotal}>EST. TOTAL</Text>
+          <Text style={styles.calculatedTotal}>${calculateTotal()} </Text>
+        </View>
+
+         <Pressable style={styles.checkout}>
+           <Image source={require('../assets/shopping bag.png')}
+           
+            tintColor='white'
+            style={{height:34, width:34,marginRight: 15}}
+           />
+           <Text style={{color:'white', fontSize:24, fontWeight:'bold'}}>CHECKOUT</Text>
+         </Pressable>
       </View>
+     
     </SafeAreaView>
   )
 }
@@ -104,6 +122,16 @@ const styles = StyleSheet.create({
       marginVertical: 10
       
     },
+
+
+    amountContainer:{
+     flexDirection:'row',
+     height:50,
+     paddingHorizontal: 25,
+     justifyContent:'space-between',
+     alignItems: 'center'
+    },
+
     cartegory:{
       fontWeight:'bold',
       fontSize: 18,
@@ -116,13 +144,18 @@ const styles = StyleSheet.create({
       color:'orange',
       marginRight: 100
     },
+
+    estTotal:{
+      fontSize: 20,
+      fontWieght: 'bold'
+    },
   
     description:{
       color:'grey'
     },
 
 
-    checkout:{
+    checkoutText:{
       fontWeight:'bold',
       fontSize: 16,
       letterSpacing:3,
@@ -140,5 +173,21 @@ const styles = StyleSheet.create({
       position:'absolute',
       bottom:20,
       right:30
+    },
+
+    checkout:{
+      width: 450,
+      height: Platform.OS==='ios'?100: 80,
+      paddingBottom: Platform.OS ==='ios'? 20:0,
+      backgroundColor:'black',
+      alignItems:'center',
+      justifyContent:'center',
+      flexDirection:'row'
+    },
+
+
+    calculatedTotal:{
+      color:'orange',
+      fontSize: 24,
     }
 })
