@@ -1,13 +1,38 @@
 import { StyleSheet, Text, View,SafeAreaView, Image, FlatList,StatusBar} from 'react-native'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {DataContext} from '../DataContext'
 import CartHeader from '../Components/CartHeader';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CartScreen() {
 
 
   const {productData} = useContext(DataContext);
+  const [storedData, setStoredData]= useState([])
+
+
+
+  
+
+
+
+  const fetchData= async ()=>{
+    try{
+      const value = await AsyncStorage.getItem('data')
+
+      if( value !== null){
+        setStoredData(value)
+      }
+    }catch(error){
+
+    }
+  }
+
+
+  useEffect(()=>{
+    fetchData()
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={{width:'100%'}}>

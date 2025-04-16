@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function Jewelery() {
   return (
-    <SafeAreaView style={{paddingTop:StatusBar.currentHeight, backgroundColor:'#ddd', flex:1}}>
+    <SafeAreaView style={{ backgroundColor:'#fff', flex:1}}>
       <Header/>
       <View style={{flex:1,alignItems:'center', justifyContent:'center', backgroundColor:'white'}}>
         <Text>Jewelery</Text>

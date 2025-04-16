@@ -7,6 +7,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import  {DataContext} from '../DataContext';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 export default function Home({navigation}) {
@@ -47,7 +50,35 @@ export default function Home({navigation}) {
           setLoading(false)
       }
         }
+
+        const saveData= async ()=>{
+          try{
+      
+            await AsyncStorage.setItem('data', JSON.stringify(products))
+            console.log(JSON.parse(products))
+      
+          }catch(error){
+      
+          }
+        }
+
+        const fetchData = async ()=>{
+          try{
+            const value = await AsyncStorage.getItem('data')
+          if(value !== null){
+
+            const stored = JSON.parse(value);
+            console.log(stored);
+            setProductData( stored);
+          }
+          } catch(error){
+            console.log('error')
+          }
+        }
+
         
+
+
   return (
 
 
@@ -126,7 +157,7 @@ export default function Home({navigation}) {
 
               
                 <Text style={styles.price}>${item.price}</Text>
-                <Pressable style={styles.add} onPress={() => {setProductData(prev => [...prev, {title: item.title,category: item.category,image: item.image,price: item.price,}]);}}
+                <Pressable style={styles.add} onPress={() => {setProductData(prev => [...prev, {title: item.title,category: item.category,image: item.image,price: item.price,}]); saveData(); fetchData()}}
                 >
                     <MaterialIcons name="add-circle-outline" size={24} color="black" />
                 </Pressable>
